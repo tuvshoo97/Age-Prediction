@@ -1,4 +1,5 @@
 streamlit
+streamlit_webrtc
 fastai==2.7.10
 fastcore==1.5.28
 gdown==4.6.0
