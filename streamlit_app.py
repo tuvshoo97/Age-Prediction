@@ -12,11 +12,11 @@ def get_y(row):
 
 st.set_page_config(page_title="Age Detection",layout="wide")
 
-st.markdown("""# Mongolian Four Food Classifier
+st.markdown("""# Real-Time Age Prediction with Webcam Access
 
-Get ready to impress your Mongolian friends with your knowledge of traditional holiday foods! With this app, you can upload an image of Tsuivan, Khuushuur, Buuz, or Niislel salad and find out which delicious dish it is. Who needs a taste tester when you've got this app? 
+Using this app, you can predict the age of a person in real-time by accessing your webcam. Impress your friends with this cutting-edge deep learning technology!
 
-This app was created as a fun demo for the Deep Learning course at LETU Mongolia American University, but we won't judge if you use it to win food trivia night. 🍴""")
+This app was created as a project for the Deep Learning course at LETU Mongolia American University. Have fun exploring the world of age detection with live video!""")
 
 # Model Loading Section
 model_path = Path("export.pkl")
