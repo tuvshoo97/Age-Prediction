@@ -34,8 +34,8 @@ def get_x(row):
 def get_y(row):
         return row['age']
 
-model_path = Path("export.pkl")
-if not model_path.exists():
+model_path = "export.pkl"
+if not os.path.isfile(model_path):
     with st.spinner("Downloading model... this may take a while! \n Don't stop it!"):
         url = 'https://drive.google.com/uc?id=1gJNYV3KB_oeS7scI9lpQIfSuj-Lb9Og0'
         output = 'export.pkl'
