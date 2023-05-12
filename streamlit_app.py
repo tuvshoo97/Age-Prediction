@@ -3,6 +3,7 @@ import streamlit as st
 from streamlit_webrtc import webrtc_streamer
 from fastai.vision.all import *
 import gdown
+from streamlit_webrtc.transform import VideoTransformerBase
 # Check if the Haar Cascade XML file exists, otherwise download it
 xml_file_path = "haarcascade_frontalface_default.xml"
 if not os.path.isfile(xml_file_path):
