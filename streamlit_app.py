@@ -3,6 +3,9 @@ import streamlit as st
 from streamlit_webrtc import webrtc_streamer, VideoProcessorBase
 from fastai.vision.all import *
 import gdown
+import os
+
+from twilio.rest import Client
 # Check if the Haar Cascade XML file exists, otherwise download it
 xml_file_path = "haarcascade_frontalface_default.xml"
 if not os.path.isfile(xml_file_path):
@@ -12,8 +15,7 @@ if not os.path.isfile(xml_file_path):
 
 # Load the Haar Cascade Classifier for face detection
 face_cascade = cv2.CascadeClassifier(xml_file_path)
-import os
-from twilio.rest import Client
+
 
 # Find your Account SID and Auth Token at twilio.com/console
 # and set the environment variables. See http://twil.io/secure
