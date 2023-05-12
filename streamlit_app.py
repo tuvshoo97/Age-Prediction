@@ -6,7 +6,13 @@ import gdown
 
 # Load the Haar Cascade Classifier for face detection
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+def get_x(row):
+    return row['image']
 
+def get_y(row):
+        return row['age']
+
+model_path = Path("export.pkl")
 if not model_path.exists():
     with st.spinner("Downloading model... this may take awhile! \n Don't stop it!"):
         url = 'https://drive.google.com/uc?id=1cs7nWO-XIQBWqLnTjzuG_lOkEnXwyrpd'
