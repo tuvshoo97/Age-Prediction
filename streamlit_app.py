@@ -1,6 +1,6 @@
 import cv2
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer, VideoProcessorBase
+from streamlit_webrtc import webrtc_streamer, VideoTransformerBase
 from fastai.vision.all import *
 import gdown
 import os
@@ -42,7 +42,7 @@ if not model_path.exists():
 else:
     learn = load_learner('export.pkl')
 
-class AgeDetector(VideoProcessorBase):
+class AgeDetector(VideoTransformerBase):
     def __init__(self):
         super().__init__()
 
