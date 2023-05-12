@@ -42,16 +42,13 @@ if not model_path.exists():
 else:
     learn = load_learner('export.pkl')
 
-class AgeDetector(VideoProcessorBase):
+class AgeDetector(VideoTransformerBase):
     def __init__(self):
         super().__init__()
 
-    def recv(self, frame):
-        # Convert the frame to numpy array
-        img = frame.to_ndarray(format="bgr24")
-
+    def transform(self, frame):
         # Convert the frame to grayscale for face detection
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         # Perform face detection using the Haar Cascade Classifier
         faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
@@ -59,22 +56,19 @@ class AgeDetector(VideoProcessorBase):
         # Iterate over the detected faces
         for (x, y, w, h) in faces:
             # Draw a rectangle around each detected face
-            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
             # Extract the region of interest (ROI) or the cropped face image
-            cropped_face = img[y:y + h, x:x + w]
+            cropped_face = frame[y:y + h, x:x + w]
 
-            # Perform age detection on the cropped face image
-            age, _ = learn.predict(cropped_face)
+            # Perform age detection on the cropped face image using your custom age detection algorithm
+            age = learn.predict(cropped_face)[0][0]
 
             # Display the predicted age on the frame
-            age_text = "Age: {}".format(round(age))
-            cv2.putText(img, age_text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+            age_text = "Age: {}".format(round(age, 0))
+            cv2.putText(frame, age_text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
-        # Convert the processed frame back to av.VideoFrame format
-        processed_frame = av.VideoFrame.from_ndarray(img, format="bgr24")
-
-        return processed_frame
+        return frame
 
 def main():
     st.set_page_config(page_title="Age Detection", layout="wide")
