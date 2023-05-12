@@ -17,7 +17,6 @@ if not os.path.isfile(xml_file_path):
 # Load the Haar Cascade Classifier for face detection
 try:
     face_cascade = cv2.CascadeClassifier(xml_file_path)
-    if os.path.isfile(xml_file_path):st.write("Successfully loaded cascade classifiers")
 except Exception:
     st.write("Error loading cascade classifiers")
 # Find your Account SID and Auth Token at twilio.com/console
@@ -41,6 +40,7 @@ if not os.path.isfile(model_path):
         url = 'https://drive.google.com/uc?id=1gJNYV3KB_oeS7scI9lpQIfSuj-Lb9Og0'
         gdown.download(url, model_path, quiet=False)
     learn = load_learner(model_path)
+    if os.path.isfile(model_path):st.write("Successfully loaded learner")
 else:
     learn = load_learner(model_path)
 
