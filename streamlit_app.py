@@ -42,7 +42,7 @@ if not model_path.exists():
 else:
     learn = load_learner('export.pkl')
 
-class AgeDetector(VideoTransformerBase):
+class AgeDetector(VideoProcessorBase):
     def __init__(self):
         super().__init__()
 
