@@ -3,6 +3,7 @@ from fastcore.all import *
 import fastai
 from fastai.vision.all import *
 import cv2
+import gdown
 
 def get_x(row):
     return row['image']
