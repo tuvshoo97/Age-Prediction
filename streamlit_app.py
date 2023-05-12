@@ -57,6 +57,7 @@ class AgeDetector(VideoProcessorBase):
             cv2.putText(frame, age_text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
         return frame
+    
 def get_ice_servers():
     """Use Twilio's TURN server because Streamlit Community Cloud has changed
     its infrastructure and WebRTC connection cannot be established without TURN server now.  # noqa: E501
@@ -90,7 +91,7 @@ def main():
     This app was created as a project for the Deep Learning course at LETU Mongolia American University. Have fun exploring the world of age detection with live video!""")
 
     # Configure the Streamlit WebRTC component
-    webrtc_ctx = webrtc_streamer(key="example", rtc_configuration={"iceServers": get_ice_servers()}, video_transformer_factory=AgeDetector)
+    webrtc_ctx = webrtc_streamer(key="object-detection", mode=WebRtcMode.SENDRECV,rtc_configuration={"iceServers": get_ice_servers()},, video_transformer_factory=AgeDetector)
 
 if __name__ == "__main__":
     main()
