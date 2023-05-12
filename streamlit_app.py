@@ -1,6 +1,6 @@
 import cv2
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer, VideoTransformerBase
+from streamlit_webrtc import webrtc_streamer, VideoTransformerBase, WebRtcMode
 from fastai.vision.all import *
 import gdown
 import os
