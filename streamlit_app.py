@@ -46,7 +46,7 @@ class AgeDetector(VideoProcessorBase):
     def __init__(self):
         super().__init__()
 
-    def recv(self, frame: av.VideoFrame):
+    def recv(self, frame):
         # Convert the frame to numpy array
         img = frame.to_ndarray(format="bgr24")
 
