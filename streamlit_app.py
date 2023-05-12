@@ -42,13 +42,12 @@ if not model_path.exists():
 else:
     learn = load_learner('export.pkl')
 
-# Load the age detection model
 class AgeDetector(VideoProcessorBase):
     def __init__(self):
         super().__init__()
 
     def recv(self, frame: av.VideoFrame) -> av.VideoFrame:
-        # Convert the frame to numpy array format
+        # Convert the frame to numpy array
         img = frame.to_ndarray(format="bgr24")
 
         # Convert the frame to grayscale for face detection
@@ -72,10 +71,11 @@ class AgeDetector(VideoProcessorBase):
             age_text = "Age: {}".format(round(age))
             cv2.putText(img, age_text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
-        # Convert the frame back to av.VideoFrame format
-        frame = av.VideoFrame.from_ndarray(img, format="bgr24")
-        
-        return frame
+        # Convert the processed frame back to av.VideoFrame format
+        processed_frame = av.VideoFrame.from_ndarray(img, format="bgr24")
+
+        return processed_frame
+
 def main():
     st.set_page_config(page_title="Age Detection", layout="wide")
 
