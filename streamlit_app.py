@@ -17,6 +17,7 @@ if not os.path.isfile(xml_file_path):
 # Load the Haar Cascade Classifier for face detection
 try:
     face_cascade = cv2.CascadeClassifier(xml_file_path)
+    st.write("Successfully loaded cascade classifiers")
 except Exception:
     st.write("Error loading cascade classifiers")
 # Find your Account SID and Auth Token at twilio.com/console
