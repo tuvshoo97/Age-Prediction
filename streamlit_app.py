@@ -2,12 +2,20 @@ import cv2
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer
 from fastai.vision.all import *
+import gdown
 
 # Load the Haar Cascade Classifier for face detection
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
+if not model_path.exists():
+    with st.spinner("Downloading model... this may take awhile! \n Don't stop it!"):
+        url = 'https://drive.google.com/uc?id=1cs7nWO-XIQBWqLnTjzuG_lOkEnXwyrpd'
+        output = 'export.pkl'
+        gdown.download(url, output, quiet=False)
+    learn = load_learner('export.pkl')
+else:
+    learn = load_learner('export.pkl')
 # Load the age detection model
-learn = load_learner('export.pkl')
 
 class AgeDetector(VideoTransformerBase):
     def __init__(self):
