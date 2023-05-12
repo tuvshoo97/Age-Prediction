@@ -69,7 +69,6 @@ def main():
 
     # Configure the Streamlit WebRTC component
     webrtc_ctx = webrtc_streamer(key="example", video_transformer_factory=AgeDetector)
-    result = webrtc_ctx.video_transformer.result_queue.get(timeout=1.0)
 
 if __name__ == "__main__":
     main()
