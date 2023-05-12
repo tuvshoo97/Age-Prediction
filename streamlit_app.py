@@ -38,11 +38,10 @@ model_path = "export.pkl"
 if not os.path.isfile(model_path):
     with st.spinner("Downloading model... this may take a while! \n Don't stop it!"):
         url = 'https://drive.google.com/uc?id=1gJNYV3KB_oeS7scI9lpQIfSuj-Lb9Og0'
-        output = 'export.pkl'
-        gdown.download(url, output, quiet=False)
-    learn = load_learner('export.pkl')
+        gdown.download(url, model_path, quiet=False)
+    learn = load_learner(model_path)
 else:
-    learn = load_learner('export.pkl')
+    learn = load_learner(model_path)
 
 class AgeDetector(VideoTransformerBase):
     def transform(self, frame):
