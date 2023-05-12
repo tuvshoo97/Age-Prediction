@@ -57,7 +57,29 @@ class AgeDetector(VideoProcessorBase):
             cv2.putText(frame, age_text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
         return frame
+def get_ice_servers():
+    """Use Twilio's TURN server because Streamlit Community Cloud has changed
+    its infrastructure and WebRTC connection cannot be established without TURN server now.  # noqa: E501
+    We considered Open Relay Project (https://www.metered.ca/tools/openrelay/) too,
+    but it is not stable and hardly works as some people reported like https://github.com/aiortc/aiortc/issues/832#issuecomment-1482420656  # noqa: E501
+    See https://github.com/whitphx/streamlit-webrtc/issues/1213
+    """
 
+    # Ref: https://www.twilio.com/docs/stun-turn/api
+    try:
+        account_sid = os.environ["TWILIO_ACCOUNT_SID"]
+        auth_token = os.environ["TWILIO_AUTH_TOKEN"]
+    except KeyError:
+        logger.warning(
+            "Twilio credentials are not set. Fallback to a free STUN server from Google."  # noqa: E501
+        )
+        return [{"urls": ["stun:stun.l.google.com:19302"]}]
+
+    client = Client(account_sid, auth_token)
+
+    token = client.tokens.create()
+
+    return token.ice_servers
 def main():
     st.set_page_config(page_title="Age Detection", layout="wide")
 
@@ -68,7 +90,7 @@ def main():
     This app was created as a project for the Deep Learning course at LETU Mongolia American University. Have fun exploring the world of age detection with live video!""")
 
     # Configure the Streamlit WebRTC component
-    webrtc_ctx = webrtc_streamer(key="example", video_transformer_factory=AgeDetector)
+    webrtc_ctx = webrtc_streamer(key="example", rtc_configuration={"iceServers": get_ice_servers()}, video_transformer_factory=AgeDetector)
 
 if __name__ == "__main__":
     main()
