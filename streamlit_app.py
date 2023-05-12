@@ -31,46 +31,59 @@ if not model_path.exists():
 else:
     learn = load_learner('export.pkl')
 
+import cv2
+import streamlit as st
+from streamlit_webrtc import webrtc_streamer
 
-# Load the pre-trained face cascade classifier
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-# Create a VideoCapture object to read from the camera
-video_capture = cv2.VideoCapture(0)
+# Load the Haar Cascade Classifier for face detection
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-while True:
-    # Read a frame from the video capture
-    ret, frame = video_capture.read()
-    
-    # Convert the frame to grayscale for face detection
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+def main():
+    # Create a video capture object
+    video_capture = cv2.VideoCapture(0)
 
-    # Perform face detection using the Haar Cascade Classifier
-    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+    # Configure the Streamlit WebRTC component
+    webrtc_ctx = webrtc_streamer(key="example", video_transformer_factory=None, async_transform=True)
 
-    # Iterate over the detected faces
-    for (x, y, w, h) in faces:
-        # Draw a rectangle around each detected face
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+    if webrtc_ctx.video_transformer:
+        while True:
+            # Read a frame from the video capture
+            ret, frame = video_capture.read()
 
-        # Extract the region of interest (ROI) or the cropped face image
-        cropped_face = frame[y:y + h, x:x + w]
-        age = learn.predict(cropped_face)[0][0]
+            # Convert the frame to grayscale for face detection
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        # Perform age detection on the cropped face image using your custom age detection algorithm
-        # age = custom_age_detection_algorithm(cropped_face)
+            # Perform face detection using the Haar Cascade Classifier
+            faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
 
-        # Display the predicted age on the frame
-        age_text = "Age: {}".format(round(age,0))
-        cv2.putText(frame, age_text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+            # Iterate over the detected faces
+            for (x, y, w, h) in faces:
+                # Draw a rectangle around each detected face
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-        # Display the frame with bounding boxes around the detected faces
-        cv2.imshow("Real-time Face Detection", frame)
+                # Extract the region of interest (ROI) or the cropped face image
+                cropped_face = frame[y:y + h, x:x + w]
 
-    # Exit the loop if 'q' is pressed
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+                # Perform age detection on the cropped face image using your custom age detection algorithm
+                age = custom_age_detection_algorithm(cropped_face)
 
-# Release the VideoCapture and close all windows
-video_capture.release()
-cv2.destroyAllWindows()
-        
+                # Display the predicted age on the frame
+                age_text = "Age: {}".format(round(age, 0))
+                cv2.putText(frame, age_text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+
+            # Display the frame with bounding boxes around the detected faces
+            cv2.imshow("Real-time Face Detection", frame)
+
+            # Send the processed frame to the Streamlit WebRTC component
+            webrtc_ctx.video_transformer.frame_transformed(frame)
+
+            # Exit the loop if 'q' is pressed
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+    # Release the VideoCapture and close all windows
+    video_capture.release()
+    cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    main()
