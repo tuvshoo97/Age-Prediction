@@ -70,7 +70,7 @@ class AgeDetector(VideoTransformerBase):
         return frame
 
 def main():
-    st.set_page_config(page_title="Age Detection", layout="wide")
+    #st.set_page_config(page_title="Age Detection", layout="wide")
 
     st.markdown("""# Real-Time Age Prediction with Webcam Access
 
