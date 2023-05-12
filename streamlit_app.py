@@ -43,9 +43,6 @@ else:
     learn = load_learner('export.pkl')
 
 class AgeDetector(VideoTransformerBase):
-    def __init__(self):
-        super().__init__()
-
     def transform(self, frame):
         # Convert the frame to grayscale for face detection
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
