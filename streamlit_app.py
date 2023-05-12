@@ -50,7 +50,7 @@ class AgeDetector(VideoTransformerBase):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
         # Perform face detection using the Haar Cascade Classifier
-        faces = face_cascade.detectMultiScale(image=gray, scaleFactor=1.3, minNeighbors=5)
+        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
         # Iterate over the detected faces
         for (x, y, w, h) in faces:
             # Draw a rectangle around each detected face
