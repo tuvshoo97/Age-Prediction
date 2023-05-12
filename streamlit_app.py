@@ -40,10 +40,10 @@ if not os.path.isfile(model_path):
         url = 'https://drive.google.com/uc?id=1gJNYV3KB_oeS7scI9lpQIfSuj-Lb9Og0'
         gdown.download(url, model_path, quiet=False)
     learn = load_learner(model_path)
-    if os.path.isfile(model_path):st.write("Successfully loaded learner")
 else:
     learn = load_learner(model_path)
-
+if os.path.isfile(model_path):st.write("Successfully loaded learner")
+    
 class AgeDetector(VideoTransformerBase):
     def transform(self, frame):
         # Convert the frame to grayscale for face detection
