@@ -2,3 +2,4 @@ streamlit
 fastai==2.5.3
 fastcore==1.3.27
 gdown==4.2.0
+opencv-python-headless
