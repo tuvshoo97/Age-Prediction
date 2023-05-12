@@ -91,7 +91,7 @@ def main():
     This app was created as a project for the Deep Learning course at LETU Mongolia American University. Have fun exploring the world of age detection with live video!""")
 
     # Configure the Streamlit WebRTC component
-    webrtc_ctx = webrtc_streamer(key="object-detection", mode=WebRtcMode.SENDRECV,video_transformer_factory=AgeDetector)
+    webrtc_ctx = webrtc_streamer(key="object-detection",video_transformer_factory=AgeDetector)
 
 if __name__ == "__main__":
     main()
