@@ -53,20 +53,20 @@ class AgeDetector(VideoTransformerBase):
         # Iterate over the detected faces
         for (x, y, w, h) in faces:
             # Draw a rectangle around each detected face
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
             # Extract the region of interest (ROI) or the cropped face image
-            cropped_face = frame[y:y + h, x:x + w]
+            cropped_face = img[y:y + h, x:x + w]
 
             # Perform age detection on the cropped face image using your custom age detection algorithm
             age = learn.predict(cropped_face)[0][0]
 
             # Display the predicted age on the frame
             age_text = "Age: {}".format(round(age, 0))
-            cv2.putText(frame, age_text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+            cv2.putText(img, age_text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
             
 
-        return frame
+        return img
 
 def main():
     #st.set_page_config(page_title="Age Detection", layout="wide")
