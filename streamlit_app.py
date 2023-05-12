@@ -3,9 +3,16 @@ import streamlit as st
 from streamlit_webrtc import webrtc_streamer
 from fastai.vision.all import *
 import gdown
+# Check if the Haar Cascade XML file exists, otherwise download it
+xml_file_path = "haarcascade_frontalface_default.xml"
+if not os.path.isfile(xml_file_path):
+    with st.spinner("Downloading Haar Cascade XML file..."):
+        url = "https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_default.xml"
+        gdown.download(url, xml_file_path, quiet=False)
 
 # Load the Haar Cascade Classifier for face detection
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier(xml_file_path)
+
 def get_x(row):
     return row['image']
 
