@@ -35,7 +35,7 @@ def get_y(row):
 model_path = Path("export.pkl")
 if not model_path.exists():
     with st.spinner("Downloading model... this may take awhile! \n Don't stop it!"):
-        url = 'https://drive.google.com/uc?id=1cs7nWO-XIQBWqLnTjzuG_lOkEnXwyrpd'
+        url = 'https://drive.google.com/uc?id=1gJNYV3KB_oeS7scI9lpQIfSuj-Lb9Og0'
         output = 'export.pkl'
         gdown.download(url, output, quiet=False)
     learn = load_learner('export.pkl')
