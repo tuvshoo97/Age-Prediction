@@ -47,7 +47,8 @@ else:
 class AgeDetector(VideoTransformerBase):
     def transform(self, frame):
         # Convert the frame to grayscale for face detection
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        img = frame.to_ndarray(format="bgr24")
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
         # Perform face detection using the Haar Cascade Classifier
         faces = face_cascade.detectMultiScale(image=gray, scaleFactor=1.3, minNeighbors=5)
