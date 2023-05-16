@@ -44,8 +44,8 @@ if not os.path.isfile(model_path):
 else:
     learn = load_learner(model_path)
     
-class AgeDetector(VideoTransformerBase):
-    def transform(self, frame):
+class AgeDetector:
+    def recv(self, frame):
         # Convert the frame to grayscale for face detection
         img = frame.to_ndarray(format="bgr24")
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -79,7 +79,7 @@ def main():
     This app was created as a project for the Deep Learning course at LETU Mongolia American University. Have fun exploring the world of age detection with live video!""")
 
     # Configure the Streamlit WebRTC component
-    webrtc_ctx = webrtc_streamer(key="example" ,mode=WebRtcMode.SENDRECV,rtc_configuration={"iceServers": token.ice_servers},
+    webrtc_ctx = webrtc_streamer(key="key",rtc_configuration={"iceServers": token.ice_servers},
                                  video_processor_factory=AgeDetector)
 
 if __name__ == "__main__":
