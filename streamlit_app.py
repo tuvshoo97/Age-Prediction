@@ -60,7 +60,10 @@ class AgeDetector:
             cropped_face = img[y-20:y + h+20, x-20:x + w+20]
 
             # Perform age detection on the cropped face image using your custom age detection algorithm
-            age = learn.predict(cropped_face)[0][0]
+            try :
+                age = learn.predict(cropped_face)[0][0]
+            except:
+                continue
 
             # Display the predicted age on the frame
             age_text = "Age: {}".format(round(age, 0))
