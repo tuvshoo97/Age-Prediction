@@ -3,6 +3,7 @@ import streamlit as st
 from streamlit_webrtc import webrtc_streamer, VideoTransformerBase, WebRtcMode
 from fastai.vision.all import *
 import gdown
+import av
 import os
 
 from twilio.rest import Client
@@ -49,11 +50,11 @@ class AgeDetector(VideoTransformerBase):
         img = frame.to_ndarray(format="bgr24")
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         # Perform face detection using the Haar Cascade Classifier
-        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
+        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=3)
         # Iterate over the detected faces
         for (x, y, w, h) in faces:
             # Draw a rectangle around each detected face
-            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 3)
 
             # Extract the region of interest (ROI) or the cropped face image
             cropped_face = img[y:y + h, x:x + w]
@@ -66,7 +67,7 @@ class AgeDetector(VideoTransformerBase):
             cv2.putText(img, age_text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
             
 
-        return img
+        return av.VideoFrame.from_ndarray(img, format='bgr24')
 
 def main():
     #st.set_page_config(page_title="Age Detection", layout="wide")
