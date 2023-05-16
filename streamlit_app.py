@@ -54,10 +54,10 @@ class AgeDetector:
         # Iterate over the detected faces
         for (x, y, w, h) in faces:
             # Draw a rectangle around each detected face
-            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 3)
+            cv2.rectangle(img, (x-20, y-20), (x + w+20, y + h+20), (0, 255, 0), 3)
 
             # Extract the region of interest (ROI) or the cropped face image
-            cropped_face = img[y:y + h, x:x + w]
+            cropped_face = img[y-20:y + h+20, x-20:x + w+20]
 
             # Perform age detection on the cropped face image using your custom age detection algorithm
             age = learn.predict(cropped_face)[0][0]
