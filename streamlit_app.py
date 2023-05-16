@@ -53,9 +53,6 @@ class AgeDetector:
         faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
         # Iterate over the detected faces
         for (x, y, w, h) in faces:
-            # Draw a rectangle around each detected face
-            cv2.rectangle(img, (x-20, y-20), (x + w+20, y + h+20), (0, 255, 0), 3)
-
             # Extract the region of interest (ROI) or the cropped face image
             cropped_face = img[y-20:y + h+20, x-20:x + w+20]
 
@@ -65,6 +62,9 @@ class AgeDetector:
             except:
                 continue
 
+            # Draw a rectangle around each detected face
+            cv2.rectangle(img, (x-20, y-20), (x + w+20, y + h+20), (0, 255, 0), 3)
+            
             # Display the predicted age on the frame
             age_text = "Age: {}".format(round(age, 0))
             cv2.putText(img, age_text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
