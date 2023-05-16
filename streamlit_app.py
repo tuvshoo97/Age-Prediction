@@ -38,7 +38,7 @@ def get_y(row):
 model_path = "export.pkl"
 if not os.path.isfile(model_path):
     with st.spinner("Downloading model... this may take a while! \n Don't stop it!"):
-        url = 'https://drive.google.com/uc?id=0wWin1GA4YOQwbUeBlPw7AMpo75gzLu98'
+        url = 'https://drive.google.com/uc?id=1wWin1GA4YOQwbUeBlPw7AMpo75gzLu98'
         gdown.download(url, model_path, quiet=False)
     learn = load_learner(model_path)
 else:
