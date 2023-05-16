@@ -74,7 +74,7 @@ def main():
 
     st.markdown("""# Real-Time Age Prediction with Webcam Access
 
-    Using    this app, you can predict the age of a person in real-time by accessing your webcam. Impress your friends with this cutting-edge deep learning technology!
+    Using this app, you can predict the age of a person in real-time by accessing your webcam. Impress your friends with this cutting-edge deep learning technology!
 
     This app was created as a project for the Deep Learning course at LETU Mongolia American University. Have fun exploring the world of age detection with live video!""")
 
