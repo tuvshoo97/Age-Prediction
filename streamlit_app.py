@@ -69,7 +69,7 @@ class AgeDetector:
             # Display the predicted age on the frame
             mean_age = int(np.mean(age_list[-100:]))
             age_text = "Age (Estimated): {}".format(mean_age)
-            cv2.putText(img, age_text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+            cv2.putText(img, age_text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
         return av.VideoFrame.from_ndarray(img, format='bgr24')
 
