@@ -71,7 +71,6 @@ class AgeDetector:
             age_text = "Age: {}".format(round(age, 0))
             cv2.putText(img, age_text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
             estimated_age = int(np.mean(age_list))
-            st.write("Age (Estimate):", estimated_age)
 
         return av.VideoFrame.from_ndarray(img, format='bgr24')
 
@@ -87,6 +86,7 @@ def main():
     # Configure the Streamlit WebRTC component
     webrtc_ctx = webrtc_streamer(key="key",rtc_configuration={"iceServers": token.ice_servers},
                                  video_processor_factory=AgeDetector)
+    st.write("Age (Estimate):", estimated_age)
 
 if __name__ == "__main__":
     main()
